@@ -7,6 +7,9 @@
     <title>Surveys</title>
   </head>
   <body>
-    <h1>Survey questions!</h1>
+    { % for msg in get_flashed_messages() %}
+      <p> {{msg}}</p>
+      {% endfor %}
+      {% block content %}
   </body>
 </html>

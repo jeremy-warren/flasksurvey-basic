@@ -1,8 +1,11 @@
 from flask import Flask, render_template, request, redirect, flash
 from surveys import satisfaction_survey as survey
+# from flask_debugtoolbar import DebugToolbarExtension
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = ['dogs']
+
+# debug = DebugToolbarExtension(app)
 
 
 responses = []
@@ -12,18 +15,15 @@ responses = []
 
 @app.route('/')
 def start_survey():
-
-    return redirect("/instructions.html")
-
-
-@app.route('/instructions', methods='POST')
-def instructions():
-    return render_template("instructions.html")
-    responses = []
+    return render_template("/instructions.html")
 
 
-@app.route('/questions/<int:qid>', methods='POST')
-def questions():
-    return render_template('questions/qid.html')
-    if not responses[0]:
-        print('lakdslalsjd')
+@app.route('/questions/<int:qid>')
+def show_question():
+    return render_template("/question.html")
+
+
+@app.route('/answer', methods="POST")
+def next_question():
+    choice = request.form['answer']
+    responses.append(choice)
